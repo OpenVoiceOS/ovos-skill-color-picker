@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.10a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.10a1) (2026-03-24)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.9a1...0.0.10a1)
+
+**Merged pull requests:**
+
+- fix: rename bare lang code locale directories [\#21](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/21) ([ovos-localize[bot]](https://github.com/apps/ovos-localize))
+
 ## [0.0.9a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.9a1) (2026-03-24)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.8a1...0.0.9a1)
