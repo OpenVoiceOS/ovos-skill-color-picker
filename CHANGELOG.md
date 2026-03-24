@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.0.9a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.9a1) (2026-03-24)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.8a1...0.0.9a1)
+
+**Merged pull requests:**
+
+- fix: rename bare lang code locale directories [\#19](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/19) ([ovos-localize[bot]](https://github.com/apps/ovos-localize))
+- Add French color picker locale [\#18](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/18) ([goldyfruit](https://github.com/goldyfruit))
+
 ## [0.0.8a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.8a1) (2026-01-19)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.7...0.0.8a1)
