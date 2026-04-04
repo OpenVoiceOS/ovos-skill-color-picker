@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.0.10a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.10a2) (2026-04-04)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.10a1...0.0.10a2)
+
+**Merged pull requests:**
+
+- ci: modernize GitHub workflows [\#24](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/24) ([JarbasAl](https://github.com/JarbasAl))
+- fix\(i18n\): normalize locale folders to canonical BCP-47 [\#23](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/23) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.0.10a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.10a1) (2026-03-24)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.9a1...0.0.10a1)
