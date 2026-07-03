@@ -36,10 +36,10 @@ class TestLocaleResources(TestCase):
         for color in ("red", "blue", "green"):
             self.assertIn(color, entity)
 
-    def test_color_exclude_voc_lists_pronouns(self):
+    def test_color_blacklist_lists_pronouns(self):
         blacklist = {line.strip().lower()
-                     for line in _read("vocab", "color_exclude.voc").splitlines()
-                     if line.strip()}
+                     for line in _read("color.blacklist").splitlines()
+                     if line.strip() and not line.startswith("#")}
         for pronoun in ("it", "that", "this"):
             self.assertIn(pronoun, blacklist)
 

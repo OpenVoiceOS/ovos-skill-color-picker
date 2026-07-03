@@ -52,7 +52,8 @@ ovos_skill_color_picker = [
     "*.json",
     "gui/**/*",
     "locale/**/*",
-    "locale/*/*.voc",
+    "locale/*/*.blacklist",
+    "locale/*/*.entity",
     "locale/*/*.intent",
     "locale/*/*.dialog",
 ]

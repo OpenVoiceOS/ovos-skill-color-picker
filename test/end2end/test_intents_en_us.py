@@ -2,7 +2,7 @@
 
 Each case boots an in-process MiniCroft with the skill loaded and feeds a real
 utterance through the padatious pipeline, asserting where it routes and how the
-``{color}`` slot is filled. One case proves the ``color_exclude`` slot-value
+``{color}`` slot is filled. One case proves the ``color.blacklist`` slot-value
 exclusion: a bare pronoun ("that") captured by the open ``{color}`` slot is
 rejected as a non-color and re-prompted instead of reported.
 
@@ -85,7 +85,7 @@ class TestBlacklistSlotExclusion(_RoutingTest):
     """A bare pronoun must never be reported as a color.
 
     The open ``{color}`` slot will capture a demonstrative pronoun ("set the
-    color to that"), but the ``color_exclude`` vocabulary marks such values as
+    color to that"), but the ``color.blacklist`` slot-value exclusion marks such values as
     non-colors. The handler rejects them and re-prompts with ``color-not-found``
     instead of announcing a bogus color report for "that".
     """

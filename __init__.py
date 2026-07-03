@@ -1,3 +1,6 @@
+import re
+from typing import Set
+
 from ovos_bus_client.message import Message
 
 from ovos_color_parser import sRGBAColor, color_from_description, get_contrasting_black_or_white
@@ -7,6 +10,29 @@ from ovos_workshop.skills.ovos import OVOSSkill
 
 
 class ColorPickerSkill(OVOSSkill):
+
+    def _slot_blacklist(self, lang: str) -> Set[str]:
+        """Return the values that may not fill the {color} slot for ``lang``.
+
+        Reads ``color.blacklist`` and resolves any ``<voc>`` reference to the
+        matching vocabulary file, so a demonstrative pronoun cannot be looked
+        up as if it were a named color.
+        """
+        path = self.find_resource("color.blacklist", lang=lang)
+        if not path:
+            return set()
+        terms: Set[str] = set()
+        with open(path) as blacklist:
+            for line in blacklist:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                voc = re.match(r"^<(.+)>$", line)
+                if voc:
+                    terms.update(v.lower() for v in self.voc_list(voc.group(1), lang=lang))
+                else:
+                    terms.add(line.lower())
+        return terms
 
     @intent_handler("request-color.intent")
     def handle_request_color(self, message: Message):
@@ -31,7 +57,7 @@ class ColorPickerSkill(OVOSSkill):
         message = message.forward("", {"color": requested_color})
         self.handle_request_color_by_name(message)
 
-    @intent_handler("request-color-by-name.intent", voc_blacklist=["color_exclude"])
+    @intent_handler("request-color-by-name.intent")
     def handle_request_color_by_name(self, message: Message):
         """Handle named color requests.
 
@@ -41,10 +67,11 @@ class ColorPickerSkill(OVOSSkill):
         self.log.info("Requested color: %s", requested_color)
 
         # The {color} slot is open text: a demonstrative pronoun ("set the
-        # color to that") must not be looked up as a color. Reject any value
-        # in the color_exclude vocabulary and any value the parser cannot
-        # resolve, re-prompting instead of reporting a bogus color.
-        excluded = {c.lower() for c in self.voc_list("color_exclude")}
+        # color to that") must not be looked up as a color. The slot-value
+        # exclusion in color.blacklist marks such values as non-colors; the
+        # engine does not enforce slot .blacklist yet, so reject a blacklisted
+        # value here and re-prompt instead of reporting a bogus color.
+        excluded = self._slot_blacklist(self.lang)
         if requested_color.strip().lower() in excluded:
             self.speak_dialog("color-not-found")
             return
