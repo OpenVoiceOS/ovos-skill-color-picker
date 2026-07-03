@@ -1,3 +1,4 @@
 recursive-include locale *
-recursive-include ǵui *
+recursive-include gui *
+recursive-include test *.txt
 include *.txt

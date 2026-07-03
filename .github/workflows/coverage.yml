@@ -12,6 +12,8 @@ jobs:
     with:
       python_version: '3.11'
       coverage_source: 'ovos_skill_color_picker'
-      test_path: 'test/unittests'
+      test_path: 'test/'
+      test_extras: 'test'
+      system_deps: 'swig libfann-dev'
       install_extras: ''
       min_coverage: 0

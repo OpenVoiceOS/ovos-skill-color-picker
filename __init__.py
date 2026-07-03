@@ -31,17 +31,30 @@ class ColorPickerSkill(OVOSSkill):
         message = message.forward("", {"color": requested_color})
         self.handle_request_color_by_name(message)
 
-    @intent_handler("request-color-by-name.intent")
+    @intent_handler("request-color-by-name.intent", voc_blacklist=["color_exclude"])
     def handle_request_color_by_name(self, message: Message):
         """Handle named color requests.
 
         Example: 'Show me the color burly wood'
         """
-        requested_color = message.data.get("color")
+        requested_color = message.data.get("color") or ""
         self.log.info("Requested color: %s", requested_color)
+
+        # The {color} slot is open text: a demonstrative pronoun ("set the
+        # color to that") must not be looked up as a color. Reject any value
+        # in the color_exclude vocabulary and any value the parser cannot
+        # resolve, re-prompting instead of reporting a bogus color.
+        excluded = {c.lower() for c in self.voc_list("color_exclude")}
+        if requested_color.strip().lower() in excluded:
+            self.speak_dialog("color-not-found")
+            return
+
         color = color_from_description(requested_color, lang=self.lang.split("-")[0],
                                        cast_to_palette=self.settings.get("cast_to_palette", True),
                                        fuzzy=self.settings.get("fuzzy", True))
+        if color is None:
+            self.speak_dialog("color-not-found")
+            return
 
         self.speak_dialog(
             "report-color-by-name",
