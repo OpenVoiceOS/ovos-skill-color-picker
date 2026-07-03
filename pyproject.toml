@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ovos-skill-color-picker"
+dynamic = ["version"]
+description = "OVOS color picker skill"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "JarbasAi", email = "jarbasai@mailfence.com"}
+]
+keywords = ["ovos", "skill", "plugin"]
+dependencies = [
+    "ovos-workshop>=8.0.0,<9.0.0",
+    "ovos-color-parser"
+]
+
+[project.optional-dependencies]
+test = [
+    "ovoscope>=1.5.0,<2.0.0",
+    "pytest>=7.0.0,<9",
+    "pytest-timeout>=2.0.0",
+    "ovos-core>=2.2.4a1,<2.3.0",
+    "ovos-padatious>=1.8.0a1,<2.0.0",
+    "ovos-workshop>=8.3.0a1,<9.0.0",
+    "ovos-bus-client>=2.2.0a1,<3.0.0",
+    "ovos-plugin-manager>=2.9.0a1,<3.0.0",
+    "ovos-config>=2.1.4a5,<3.0.0",
+    "ovos-utils>=0.13.4a1,<1.0.0",
+    "ovos-spec-tools>=1.4.0a1,<2.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/OpenVoiceOS/ovos-skill-color-picker"
+
+[project.entry-points."ovos.plugin.skill"]
+"ovos-skill-color-picker.krisgesling" = "ovos_skill_color_picker:ColorPickerSkill"
+
+[tool.setuptools]
+packages = ["ovos_skill_color_picker"]
+
+[tool.setuptools.package-dir]
+ovos_skill_color_picker = ""
+
+[tool.setuptools.dynamic]
+version = {attr = "ovos_skill_color_picker.version.__version__"}
+
+[tool.setuptools.package-data]
+ovos_skill_color_picker = [
+    "*.json",
+    "gui/**/*",
+    "locale/**/*",
+    "locale/*/*.voc",
+    "locale/*/*.intent",
+    "locale/*/*.dialog",
+]
