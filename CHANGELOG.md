@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.10a3](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.10a3) (2026-07-03)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.10a2...0.0.10a3)
+
+**Merged pull requests:**
+
+- chore: add ovoscope end2end intent-routing tests [\#26](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/26) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.0.10a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.10a2) (2026-04-04)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.10a1...0.0.10a2)
