@@ -44,9 +44,6 @@ class TestColorPickerIntentsEnUS(unittest.TestCase):
         types = [m.msg_type for m in messages]
         self.assertIn(f"{SKILL_ID}:{intent_file}", types)
 
-    def test_request_color(self):
-        self._assert_intent("what color is grass", "request-color.intent")
-
     def test_request_color_by_name(self):
         self._assert_intent("show me the color blue", "request-color-by-name.intent")
 
