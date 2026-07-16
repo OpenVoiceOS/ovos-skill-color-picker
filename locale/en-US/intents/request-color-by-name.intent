@@ -1,2 +1,4 @@
-Show me the (color|colour) {color}
-what does the (color|colour) {color} look like
+show me [the] (color|colour) {color}
+(set|change) [the] (color|colour) to {color}
+what does [the] (color|colour) {color} look like
+tell me about [the] (color|colour) {color}
