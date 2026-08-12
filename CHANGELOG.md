@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.0a3](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.1.0a3) (2026-08-12)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.1.0a2...0.1.0a3)
+
+**Merged pull requests:**
+
+- test: add golden-utterance e2e suite \(en-US\); fix requested-color slot crash [\#33](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/33) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.0a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.1.0a2) (2026-08-01)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.1.0a1...0.1.0a2)
