@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.1.1a1) (2026-08-12)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.1.0a3...0.1.1a1)
+
+**Merged pull requests:**
+
+- fix: revert stripped-key workaround now that ovos-spec-tools 1.6.3a1 fixes slot normalization [\#35](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/35) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.0a3](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.1.0a3) (2026-08-12)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.1.0a2...0.1.0a3)
