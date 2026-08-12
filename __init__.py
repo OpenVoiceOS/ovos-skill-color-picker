@@ -40,7 +40,10 @@ class ColorPickerSkill(OVOSSkill):
 
         Example: 'What color is _________'
         """
-        requested_color = message.data.get("requested_color")
+        # padacioso strips underscores from slot names before returning
+        # match_data, so the {requested_color} template placeholder surfaces
+        # here as "requestedcolor", not "requested_color".
+        requested_color = message.data.get("requestedcolor")
         if is_hex_code_valid(requested_color.replace(" ", "")):
             message = message.forward("", {"hex_code": requested_color.replace(" ", "")})
             self.handle_request_color_by_hex(message)
@@ -101,7 +104,12 @@ class ColorPickerSkill(OVOSSkill):
 
         Example: 'what color has a hex code of bada55'
         """
-        requested_hex_code = message.data.get("hex_code").replace(" ", "")
+        # padacioso strips underscores from slot names, so a direct
+        # request-color-by-hex.intent match surfaces "hexcode"; the
+        # internal forward() from handle_request_color still sets the
+        # underscored "hex_code" key explicitly -- accept both.
+        requested_hex_code = (message.data.get("hex_code")
+                               or message.data.get("hexcode") or "").replace(" ", "")
         self.log.info("Requested color: %s", requested_hex_code)
         if not is_hex_code_valid(requested_hex_code):
             self.speak_dialog("color-not-found")
