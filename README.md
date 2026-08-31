@@ -13,6 +13,10 @@ Ask for a color by name. The skill returns the hex and RGB values for any standa
 * "What is the hex value for {color}"
 * "Show me the color {color}"
 
+## Entity hints
+
+The skill ships `locale/<lang>/entities/color.entity`, listing common color names ("red", "teal", "fire brick", "light sea green", ...) for the `{color}` slot. These are hints, not a closed list: a color name not on the list still fills the slot and is looked up by [ovos-color-parser](https://github.com/OpenVoiceOS/ovos-color-parser); listed names simply match with more confidence. `ovos-workshop` (>=9.5.0a1) registers every shipped `.entity` file automatically when the skill's language resources are loaded, so nothing needs to be configured for this.
+
 ## Credits
 krisgesling
 
