@@ -150,7 +150,7 @@ class ColorPickerSkill(OVOSSkill):
         """
         try:
             r, g, b = message.data["rgb"].split()
-            color = sRGBAColor(r, g, b)
+            color = sRGBAColor(int(r), int(g), int(b))
         except ValueError:
             self.speak_dialog("color-not-found")
             return
