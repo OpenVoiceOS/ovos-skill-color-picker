@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.3a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.1.3a1) (2026-09-02)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.1.2a1...0.1.3a1)
+
+**Merged pull requests:**
+
+- fix: cast RGB slot values to int in request-color-by-rgb [\#48](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/48) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.2a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.1.2a1) (2026-09-01)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.1.1a4...0.1.2a1)
