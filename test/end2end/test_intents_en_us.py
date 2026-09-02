@@ -136,6 +136,88 @@ class TestColorSlotKnownValuesRoute(_RoutingTest):
         )
 
 
+class TestByRgbNumericSlot(_RoutingTest):
+    """request-color-by-rgb.intent with a real numeric ``{rgb}`` slot.
+
+    The ``golden_utterances.jsonl`` row for this intent uses the placeholder
+    utterance "what color has an RGB value of something" precisely so that
+    routing can be asserted without ever exercising the handler's numeric
+    path (an unparsable placeholder short-circuits into the
+    ``color-not-found`` dialog). That left a real "{rgb}" triple of digits
+    -- the actual documented use case ("what color has the RGB value of 172
+    172 172") -- with no e2e coverage at all: ``handle_request_color_by_rgb``
+    passed the three space-split slot values to ``sRGBAColor`` as ``str``
+    instead of ``int``, and ``sRGBAColor.__post_init__`` compares them with
+    ``<=`` against ``int`` bounds, raising ``TypeError`` and never reaching
+    ``speak_dialog`` at all.
+    """
+
+    def test_rgb_black_is_spoken(self):
+        _, spoken = self._run("what color has an RGB value of 0 0 0")
+        joined = " ".join(spoken).lower()
+        self.assertTrue(spoken, "a valid numeric RGB triple must produce a "
+                                 "spoken response, not a silently swallowed "
+                                 "handler exception")
+        self.assertIn("black", joined)
+
+    def test_rgb_white_is_spoken(self):
+        _, spoken = self._run("what color is the RGB value 255 255 255")
+        joined = " ".join(spoken).lower()
+        self.assertTrue(spoken, "a valid numeric RGB triple must produce a "
+                                 "spoken response, not a silently swallowed "
+                                 "handler exception")
+        self.assertIn("white", joined)
+
+
+class TestSiblingNegatives(_RoutingTest):
+    """A hex/rgb/name utterance must route to exactly its own intent, never
+    one of its by-hex/by-name/by-rgb siblings."""
+
+    def _claimed_others(self, utterance, own_intent):
+        session = Session(f"e2e-en_us-neg-{abs(hash(utterance))}")
+        session.lang = LANG
+        session.pipeline = PIPELINE
+        claimed = []
+        siblings = {
+            "request-color-by-name": f"{SKILL_ID}:request-color-by-name",
+            "request-color-by-hex": f"{SKILL_ID}:request-color-by-hex",
+            "request-color-by-rgb": f"{SKILL_ID}:request-color-by-rgb",
+        }
+        handlers = {}
+        for label, msg_type in siblings.items():
+            if label == own_intent:
+                continue
+            cb = (lambda l: lambda m: claimed.append(l))(label)
+            handlers[msg_type] = cb
+            self.bus.on(msg_type, cb)
+        try:
+            self.bus.emit(Message(
+                "recognizer_loop:utterance",
+                {"utterances": [utterance], "lang": LANG},
+                {"session": session.serialize()},
+            ))
+            time.sleep(3)
+        finally:
+            for msg_type, cb in handlers.items():
+                self.bus.remove(msg_type, cb)
+        return claimed
+
+    def test_hex_utterance_not_claimed_by_name_or_rgb(self):
+        claimed = self._claimed_others(
+            "what color has a hex code of ff5733", "request-color-by-hex")
+        self.assertEqual(claimed, [])
+
+    def test_rgb_utterance_not_claimed_by_name_or_hex(self):
+        claimed = self._claimed_others(
+            "what color has an RGB value of 255 0 0", "request-color-by-rgb")
+        self.assertEqual(claimed, [])
+
+    def test_name_utterance_not_claimed_by_hex_or_rgb(self):
+        claimed = self._claimed_others(
+            "show me the color red", "request-color-by-name")
+        self.assertEqual(claimed, [])
+
+
 class TestBlacklistSlotExclusion(_RoutingTest):
     """A bare pronoun must never be reported as a color.
 

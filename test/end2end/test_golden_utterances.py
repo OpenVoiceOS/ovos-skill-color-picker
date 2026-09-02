@@ -120,3 +120,34 @@ def test_negative_confusable_not_claimed(minicroft, negative):
     types = _types(minicroft, text, f"negative-{text}")
     claimed = any(t.startswith(f"{SKILL_ID}:") for t in types)
     assert not claimed, f"{text!r} (from {source_skill}) was incorrectly claimed by {SKILL_ID}"
+
+
+# each row: (utterance, own intent label, sibling labels it must NOT match)
+SIBLING_NEGATIVES = [
+    ("show me the color red", "request-color-by-name.intent",
+     ["request-color-by-hex.intent", "request-color-by-rgb.intent"]),
+    ("what color has a hex code of ff5733", "request-color-by-hex.intent",
+     ["request-color-by-name.intent", "request-color-by-rgb.intent"]),
+    ("what color has an RGB value of 255 0 0", "request-color-by-rgb.intent",
+     ["request-color-by-name.intent", "request-color-by-hex.intent"]),
+]
+
+
+@pytest.mark.timeout(60)
+@pytest.mark.parametrize("row", SIBLING_NEGATIVES, ids=lambda r: r[0])
+def test_sibling_intent_not_claimed(minicroft, row):
+    """The by-hex/by-name/by-rgb intents share overlapping "color"/"colour"
+    vocabulary; each utterance must route to exactly its own sibling, never
+    one of the others."""
+    text, own_label, sibling_labels = row
+    types = _types(minicroft, text, f"sibling-{text}")
+    own_candidates = _candidates(SKILL_ID, own_label)
+    assert any(t in own_candidates for t in types), (
+        f"{text!r}: expected one of {sorted(own_candidates)!r}, got {types!r}"
+    )
+    for sibling_label in sibling_labels:
+        sibling_candidates = _candidates(SKILL_ID, sibling_label)
+        assert not any(t in sibling_candidates for t in types), (
+            f"{text!r}: incorrectly also claimed by sibling {sibling_label!r} "
+            f"({types!r})"
+        )
