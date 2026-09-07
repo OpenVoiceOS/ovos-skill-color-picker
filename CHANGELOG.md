@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.1.4a1) (2026-09-07)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.1.3a1...0.1.4a1)
+
+**Merged pull requests:**
+
+- fix: repair intent lines with localised slot names or broken syntax [\#52](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/52) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.3a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.1.3a1) (2026-09-02)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.1.2a1...0.1.3a1)
