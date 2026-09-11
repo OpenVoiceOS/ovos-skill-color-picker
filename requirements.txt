@@ -1,2 +1,0 @@
-ovos-workshop
-ovos-color-parser

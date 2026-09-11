@@ -1,3 +1,6 @@
+import re
+from typing import Set
+
 from ovos_bus_client.message import Message
 
 from ovos_color_parser import sRGBAColor, color_from_description, get_contrasting_black_or_white
@@ -8,12 +11,38 @@ from ovos_workshop.skills.ovos import OVOSSkill
 
 class ColorPickerSkill(OVOSSkill):
 
+    def _slot_blacklist(self, lang: str) -> Set[str]:
+        """Return the values that may not fill the {color} slot for ``lang``.
+
+        Reads ``color.blacklist`` and resolves any ``<voc>`` reference to the
+        matching vocabulary file, so a demonstrative pronoun cannot be looked
+        up as if it were a named color.
+        """
+        path = self.find_resource("color.blacklist", lang=lang)
+        if not path:
+            return set()
+        terms: Set[str] = set()
+        with open(path) as blacklist:
+            for line in blacklist:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                voc = re.match(r"^<(.+)>$", line)
+                if voc:
+                    terms.update(v.lower() for v in self.voc_list(voc.group(1), lang=lang))
+                else:
+                    terms.add(line.lower())
+        return terms
+
     @intent_handler("request-color.intent")
     def handle_request_color(self, message: Message):
         """Handle requests for color where the color format is unknown.
 
         Example: 'What color is _________'
         """
+        # ovos-spec-tools>=1.6.3a1 fixes normalize_for_match() so it no
+        # longer mangles {slot} interiors; padacioso returns the
+        # spec-correct underscored key "requested_color".
         requested_color = message.data.get("requested_color")
         if is_hex_code_valid(requested_color.replace(" ", "")):
             message = message.forward("", {"hex_code": requested_color.replace(" ", "")})
@@ -37,11 +66,25 @@ class ColorPickerSkill(OVOSSkill):
 
         Example: 'Show me the color burly wood'
         """
-        requested_color = message.data.get("color")
+        requested_color = message.data.get("color") or ""
         self.log.info("Requested color: %s", requested_color)
+
+        # The {color} slot is open text: a demonstrative pronoun ("set the
+        # color to that") must not be looked up as a color. The slot-value
+        # exclusion in color.blacklist marks such values as non-colors; the
+        # engine does not enforce slot .blacklist yet, so reject a blacklisted
+        # value here and re-prompt instead of reporting a bogus color.
+        excluded = self._slot_blacklist(self.lang)
+        if requested_color.strip().lower() in excluded:
+            self.speak_dialog("color-not-found")
+            return
+
         color = color_from_description(requested_color, lang=self.lang.split("-")[0],
                                        cast_to_palette=self.settings.get("cast_to_palette", True),
                                        fuzzy=self.settings.get("fuzzy", True))
+        if color is None:
+            self.speak_dialog("color-not-found")
+            return
 
         self.speak_dialog(
             "report-color-by-name",
@@ -61,7 +104,11 @@ class ColorPickerSkill(OVOSSkill):
 
         Example: 'what color has a hex code of bada55'
         """
-        requested_hex_code = message.data.get("hex_code").replace(" ", "")
+        # ovos-spec-tools>=1.6.3a1 fixes normalize_for_match() so a direct
+        # request-color-by-hex.intent match surfaces the spec-correct
+        # underscored key "hex_code" (same key the internal forward() from
+        # handle_request_color already sets).
+        requested_hex_code = (message.data.get("hex_code") or "").replace(" ", "")
         self.log.info("Requested color: %s", requested_hex_code)
         if not is_hex_code_valid(requested_hex_code):
             self.speak_dialog("color-not-found")
@@ -103,7 +150,7 @@ class ColorPickerSkill(OVOSSkill):
         """
         try:
             r, g, b = message.data["rgb"].split()
-            color = sRGBAColor(r, g, b)
+            color = sRGBAColor(int(r), int(g), int(b))
         except ValueError:
             self.speak_dialog("color-not-found")
             return
