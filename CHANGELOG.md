@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.2.1a1) (2026-09-11)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.2.0a1...0.2.1a1)
+
+**Merged pull requests:**
+
+- fix\(locale\): add missing color.entity for ca-ES, de-DE, es-ES, fr-FR, it-IT, pt-BR, pt-PT [\#56](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/56) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.2.0a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.2.0a1) (2026-09-07)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.1.4a1...0.2.0a1)
