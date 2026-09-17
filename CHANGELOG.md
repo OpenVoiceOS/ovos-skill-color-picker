@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.4.0a1) (2026-09-17)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.3.1a1...0.4.0a1)
+
+**Merged pull requests:**
+
+- feat\(locale\): fill kab, pt-BR and pt-PT gaps against en-US [\#61](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/61) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.3.1a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.3.1a1) (2026-09-17)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.3.0a1...0.3.1a1)
