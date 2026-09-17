@@ -21,15 +21,15 @@ def _read(*parts):
 
 class TestLocaleResources(TestCase):
     def test_intent_files_present(self):
-        for name in ("request-color.intent",
-                     "request-color-by-name.intent",
-                     "request-color-by-hex.intent",
-                     "request-color-by-rgb.intent"):
+        for name in ("request_color.intent",
+                     "request_color_by_name.intent",
+                     "request_color_by_hex.intent",
+                     "request_color_by_rgb.intent"):
             self.assertTrue(_read("intents", name).strip(),
                             f"{name} is empty")
 
     def test_by_name_intent_uses_color_slot(self):
-        self.assertIn("{color}", _read("intents", "request-color-by-name.intent"))
+        self.assertIn("{color}", _read("intents", "request_color_by_name.intent"))
 
     def test_color_entity_lists_named_colors(self):
         entity = _read("entities", "color.entity").lower()

@@ -124,12 +124,12 @@ def test_negative_confusable_not_claimed(minicroft, negative):
 
 # each row: (utterance, own intent label, sibling labels it must NOT match)
 SIBLING_NEGATIVES = [
-    ("show me the color red", "request-color-by-name.intent",
-     ["request-color-by-hex.intent", "request-color-by-rgb.intent"]),
-    ("what color has a hex code of ff5733", "request-color-by-hex.intent",
-     ["request-color-by-name.intent", "request-color-by-rgb.intent"]),
-    ("what color has an RGB value of 255 0 0", "request-color-by-rgb.intent",
-     ["request-color-by-name.intent", "request-color-by-hex.intent"]),
+    ("show me the color red", "request_color_by_name.intent",
+     ["request_color_by_hex.intent", "request_color_by_rgb.intent"]),
+    ("what color has a hex code of ff5733", "request_color_by_hex.intent",
+     ["request_color_by_name.intent", "request_color_by_rgb.intent"]),
+    ("what color has an RGB value of 255 0 0", "request_color_by_rgb.intent",
+     ["request_color_by_name.intent", "request_color_by_hex.intent"]),
 ]
 
 
