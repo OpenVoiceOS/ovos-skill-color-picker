@@ -45,9 +45,9 @@ class _RoutingTest(TestCase):
         # intent bus event without the ".intent" filename suffix (same
         # naming fix documented in ovos-skill-audio-recording's e2e suite);
         # listen on the bare name so this doesn't regress on the floor bump.
-        by_name = f"{SKILL_ID}:request-color-by-name"
+        by_name = f"{SKILL_ID}:request_color_by_name"
         handlers = {
-            by_name: lambda m: intents.append(("request-color-by-name.intent",
+            by_name: lambda m: intents.append(("request_color_by_name.intent",
                                                 m.data.get("color"))),
         }
         for msg_type, cb in handlers.items():
@@ -72,15 +72,15 @@ class _RoutingTest(TestCase):
 
 
 class TestByNameRouting(_RoutingTest):
-    """request-color-by-name.intent with the {color} slot filled."""
+    """request_color_by_name.intent with the {color} slot filled."""
 
     def test_set_the_color_to_red(self):
         intents, _ = self._run("set the color to red")
-        self.assertIn(("request-color-by-name.intent", "red"), intents)
+        self.assertIn(("request_color_by_name.intent", "red"), intents)
 
     def test_show_me_blue(self):
         intents, _ = self._run("show me the color blue")
-        self.assertIn(("request-color-by-name.intent", "blue"), intents)
+        self.assertIn(("request_color_by_name.intent", "blue"), intents)
 
 
 class TestColorSlotKnownValuesRoute(_RoutingTest):
@@ -101,7 +101,7 @@ class TestColorSlotKnownValuesRoute(_RoutingTest):
 
     Empirically re-verified against ovos-padatious==2.0.3a1: "show me the
     color banana" (unrelated, unlisted noun, not a color.entity sample)
-    now matches ``request-color-by-name.intent`` with ``{color}`` filled
+    now matches ``request_color_by_name.intent`` with ``{color}`` filled
     as "banana" -- proving the registration is a hint, not an allowlist.
     Listed samples ("teal", "maroon") keep matching too.
 
@@ -114,22 +114,22 @@ class TestColorSlotKnownValuesRoute(_RoutingTest):
         """"teal" is a real sample value in
         locale/en-US/entities/color.entity."""
         intents, _ = self._run("show me the color teal")
-        self.assertIn(("request-color-by-name.intent", "teal"), intents)
+        self.assertIn(("request_color_by_name.intent", "teal"), intents)
 
     def test_known_color_maroon_matches(self):
         intents, _ = self._run("what does the color maroon look like")
-        self.assertIn(("request-color-by-name.intent", "maroon"), intents)
+        self.assertIn(("request_color_by_name.intent", "maroon"), intents)
 
     def test_out_of_list_value_still_routes_as_hint(self):
         """Post ovos-padatious>=2.0.3a1: registering color.entity is a
         scoring HINT, not a closed vocabulary. An unrelated, unlisted
-        noun ("banana") must still match request-color-by-name.intent
+        noun ("banana") must still match request_color_by_name.intent
         with the {color} slot filled with the literal utterance value.
         """
         intents, _ = self._run("show me the color banana")
-        matched = [i for i in intents if i[0] == "request-color-by-name.intent"]
+        matched = [i for i in intents if i[0] == "request_color_by_name.intent"]
         self.assertIn(
-            ("request-color-by-name.intent", "banana"), matched,
+            ("request_color_by_name.intent", "banana"), matched,
             "out-of-list slot value did not route with the expected slot "
             "value -- ovos-padatious hint semantics (2.0.3a1+) may have "
             "regressed"
@@ -137,13 +137,13 @@ class TestColorSlotKnownValuesRoute(_RoutingTest):
 
 
 class TestByRgbNumericSlot(_RoutingTest):
-    """request-color-by-rgb.intent with a real numeric ``{rgb}`` slot.
+    """request_color_by_rgb.intent with a real numeric ``{rgb}`` slot.
 
     The ``golden_utterances.jsonl`` row for this intent uses the placeholder
     utterance "what color has an RGB value of something" precisely so that
     routing can be asserted without ever exercising the handler's numeric
     path (an unparsable placeholder short-circuits into the
-    ``color-not-found`` dialog). That left a real "{rgb}" triple of digits
+    ``color_not_found`` dialog). That left a real "{rgb}" triple of digits
     -- the actual documented use case ("what color has the RGB value of 172
     172 172") -- with no e2e coverage at all: ``handle_request_color_by_rgb``
     passed the three space-split slot values to ``sRGBAColor`` as ``str``
@@ -179,9 +179,9 @@ class TestSiblingNegatives(_RoutingTest):
         session.pipeline = PIPELINE
         claimed = []
         siblings = {
-            "request-color-by-name": f"{SKILL_ID}:request-color-by-name",
-            "request-color-by-hex": f"{SKILL_ID}:request-color-by-hex",
-            "request-color-by-rgb": f"{SKILL_ID}:request-color-by-rgb",
+            "request_color_by_name": f"{SKILL_ID}:request_color_by_name",
+            "request_color_by_hex": f"{SKILL_ID}:request_color_by_hex",
+            "request_color_by_rgb": f"{SKILL_ID}:request_color_by_rgb",
         }
         handlers = {}
         for label, msg_type in siblings.items():
@@ -204,17 +204,17 @@ class TestSiblingNegatives(_RoutingTest):
 
     def test_hex_utterance_not_claimed_by_name_or_rgb(self):
         claimed = self._claimed_others(
-            "what color has a hex code of ff5733", "request-color-by-hex")
+            "what color has a hex code of ff5733", "request_color_by_hex")
         self.assertEqual(claimed, [])
 
     def test_rgb_utterance_not_claimed_by_name_or_hex(self):
         claimed = self._claimed_others(
-            "what color has an RGB value of 255 0 0", "request-color-by-rgb")
+            "what color has an RGB value of 255 0 0", "request_color_by_rgb")
         self.assertEqual(claimed, [])
 
     def test_name_utterance_not_claimed_by_hex_or_rgb(self):
         claimed = self._claimed_others(
-            "show me the color red", "request-color-by-name")
+            "show me the color red", "request_color_by_name")
         self.assertEqual(claimed, [])
 
 
@@ -224,7 +224,7 @@ class TestBlacklistSlotExclusion(_RoutingTest):
     The open ``{color}`` slot will capture a demonstrative pronoun ("set the
     color to that"), but the ``color.blacklist`` slot-value exclusion marks
     such values as non-colors. The handler rejects them and re-prompts with
-    ``color-not-found`` instead of announcing a bogus color report for
+    ``color_not_found`` instead of announcing a bogus color report for
     "that".
     """
 
@@ -234,4 +234,4 @@ class TestBlacklistSlotExclusion(_RoutingTest):
         self.assertNotIn("hex value", joined,
                          "'that' must not yield a color report")
         self.assertIn("could not find", joined,
-                      "'that' must be rejected in-handler via color-not-found")
+                      "'that' must be rejected in-handler via color_not_found")

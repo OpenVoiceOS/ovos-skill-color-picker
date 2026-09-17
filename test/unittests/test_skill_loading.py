@@ -75,7 +75,7 @@ class TestColorEntityRegistration(unittest.TestCase):
     NOTE: an ``*.entity`` file is training-data bias for a padatious
     ``{slot}``, not an admission-control allowlist -- an unlisted value
     remains capturable by the slot (empirically confirmed: a nonsense token
-    in the {color} position still matched request-color-by-name.intent at
+    in the {color} position still matched request_color_by_name.intent at
     padatious-high both before and after this change). This test only
     proves the entity reaches the engine, not that unknown values get
     rejected.
