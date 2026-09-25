@@ -46,9 +46,14 @@ class _RoutingTest(TestCase):
         # naming fix documented in ovos-skill-audio-recording's e2e suite);
         # listen on the bare name so this doesn't regress on the floor bump.
         by_name = f"{SKILL_ID}:request_color_by_name"
+        by_rgb = f"{SKILL_ID}:request_color_by_rgb"
         handlers = {
             by_name: lambda m: intents.append(("request_color_by_name.intent",
                                                 m.data.get("color"))),
+            # DIAGNOSTIC (T-4287, not for merge): name the rgb slot the
+            # handler is actually handed on the runner.
+            by_rgb: lambda m: intents.append(("request_color_by_rgb.intent",
+                                              dict(m.data))),
         }
         for msg_type, cb in handlers.items():
             self.bus.on(msg_type, cb)
@@ -161,8 +166,13 @@ class TestByRgbNumericSlot(_RoutingTest):
         self.assertIn("black", joined)
 
     def test_rgb_white_is_spoken(self):
-        _, spoken = self._run("what color is the RGB value 255 255 255")
+        intents, spoken = self._run("what color is the RGB value 255 255 255")
         joined = " ".join(spoken).lower()
+        # DIAGNOSTIC (T-4287, not for merge): the runner says
+        # "i could not find that color", which is the parse branch, so the
+        # handler never received a three-number rgb slot. Name what it did get.
+        print(f"T4287-DIAG intents={intents!r}")
+        print(f"T4287-DIAG spoken={spoken!r}")
         self.assertTrue(spoken, "a valid numeric RGB triple must produce a "
                                  "spoken response, not a silently swallowed "
                                  "handler exception")
