@@ -93,7 +93,13 @@ def _types(mc, text, session_id):
     )
     capture = CaptureSession(
         mc,
-        eof_msgs=["ovos.utterance.handled"],
+        # ovos-core 2.2.4a1 never emits ovos.utterance.handled on the
+        # matched-intent path, so every row here waited its full 30 s and the
+        # 48 rows of this file alone exhausted the ovoscope job's 25-minute
+        # cut. mycroft.skill.handler.complete lands after the handler returns,
+        # which is after every message this file reads.
+        eof_msgs=["ovos.utterance.handled",
+                  "mycroft.skill.handler.complete"],
         ignore_messages=["speak", "ovos.utterance.speak",
                           "recognizer_loop:audio_output_start",
                           "recognizer_loop:audio_output_end",
