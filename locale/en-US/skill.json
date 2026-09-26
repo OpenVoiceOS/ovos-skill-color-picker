@@ -1,0 +1,7 @@
+{
+  "name": "Color Picker",
+  "description": "Look up a color by name and hear its hex and RGB values.",
+  "examples": [
+    "show me the color green"
+  ]
+}
