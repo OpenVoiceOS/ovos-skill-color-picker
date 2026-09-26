@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.0a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.6.0a1) (2026-09-26)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.5.3a1...0.6.0a1)
+
+**Merged pull requests:**
+
+- feat\(kab\): the five report dialogs and three request intents [\#74](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/74) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.5.3a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.5.3a1) (2026-09-26)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.5.2a2...0.5.3a1)
