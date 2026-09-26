@@ -52,18 +52,37 @@ class _RoutingTest(TestCase):
         }
         for msg_type, cb in handlers.items():
             self.bus.on(msg_type, cb)
-        speak_cb = lambda m: spoken.append(m.data.get("utterance", ""))
+        session = Session(f"e2e-en_us-{abs(hash(utterance))}")
+        session.lang = LANG
+        session.pipeline = PIPELINE
+
+        def speak_cb(m):
+            # Only this utterance's own answer counts. `speak` is a shared
+            # topic and the bus is process-wide, so without this filter a
+            # reply that arrives after the previous test's window closed is
+            # collected here instead. That is what made
+            # `test_rgb_white_is_spoken` red on the runner and green on every
+            # developer machine: the string it saw, "i could not find that
+            # color", is the preceding test's reply, not its own.
+            ctx = (m.context or {}).get("session") or {}
+            if ctx.get("session_id") == session.session_id:
+                spoken.append(m.data.get("utterance", ""))
+
         self.bus.on("speak", speak_cb)
         try:
-            session = Session(f"e2e-en_us-{abs(hash(utterance))}")
-            session.lang = LANG
-            session.pipeline = PIPELINE
             self.bus.emit(Message(
                 "recognizer_loop:utterance",
                 {"utterances": [utterance], "lang": LANG},
                 {"session": session.serialize()},
             ))
-            time.sleep(3)
+            # Wait for this session's reply rather than sleeping a fixed
+            # three seconds. A loaded two-worker runner is slower than a
+            # developer machine, and a blind sleep turns that into a red.
+            deadline = time.time() + 30
+            while time.time() < deadline and not spoken:
+                time.sleep(0.1)
+            # let a second dialog of the same turn land
+            time.sleep(0.5)
         finally:
             for msg_type, cb in handlers.items():
                 self.bus.remove(msg_type, cb)
