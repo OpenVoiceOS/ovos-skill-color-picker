@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.3a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.5.3a1) (2026-09-26)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.5.2a2...0.5.3a1)
+
+**Merged pull requests:**
+
+- fix\(locale\): the store name and description in en-US [\#73](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/73) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.5.2a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.5.2a2) (2026-09-24)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.5.2a1...0.5.2a2)
