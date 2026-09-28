@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.0a1) (2026-09-28)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.6.1a2...0.7.0a1)
+
+**Merged pull requests:**
+
+- feat\(locale\): machine drafts of fa-IR, pl-PL, ru-RU, unvouched [\#81](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/81) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.6.1a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.6.1a2) (2026-09-28)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.6.1a1...0.6.1a2)
