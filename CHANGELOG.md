@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.1a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.1a1) (2026-09-28)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.0a1...0.7.1a1)
+
+**Merged pull requests:**
+
+- fix\(locale\): drop runaway lines from the fa-IR and pl-PL color entities [\#83](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/83) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.7.0a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.0a1) (2026-09-28)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.6.1a2...0.7.0a1)
