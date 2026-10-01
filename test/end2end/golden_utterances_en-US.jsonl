@@ -1,0 +1,1 @@
+{"skill_id": "ovos-skill-color-picker.openvoiceos", "utterance": "what color has a hex code of 3498db", "intent_label": "request_color_by_hex.intent", "intent_type": "padacioso", "needs_manual": true, "lang": "en-US", "machine_generated": true}
