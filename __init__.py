@@ -164,7 +164,8 @@ class ColorPickerSkill(OVOSSkill):
         if color.name is None:
             self.speak_dialog(
                 "report_color_by_rgb_name_not_known",
-                data={"red_value": color.r,
+                data={"hex_code": color.hex_str,
+                      "red_value": color.r,
                       "green_value": color.g,
                       "blue_value": color.b}
             )
