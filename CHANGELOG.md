@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.2a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.2a1) (2026-10-01)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.1a1...0.7.2a1)
+
+**Merged pull requests:**
+
+- fix\(fa-IR\): strip the terminal question mark from the intent templates [\#86](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/86) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.7.1a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.1a1) (2026-09-28)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.0a1...0.7.1a1)
@@ -244,6 +252,114 @@
 **Merged pull requests:**
 
 - es-es/translate [\#16](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/16) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+
+## [0.0.7](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.7) (2025-02-28)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.7a1...0.0.7)
+
+**Merged pull requests:**
+
+- Release 0.0.7a1 [\#15](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/15) ([github-actions[bot]](https://github.com/apps/github-actions))
+
+## [0.0.7a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.7a1) (2025-02-28)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.6...0.0.7a1)
+
+**Merged pull requests:**
+
+- Translations update [\#14](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/14) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.0.6](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.6) (2025-02-27)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.6a6...0.0.6)
+
+**Merged pull requests:**
+
+- Release 0.0.6a6 [\#13](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/13) ([github-actions[bot]](https://github.com/apps/github-actions))
+
+## [0.0.6a6](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.6a6) (2025-02-27)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.6a5...0.0.6a6)
+
+**Merged pull requests:**
+
+- Fix autos [\#12](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/12) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.0.6a5](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.6a5) (2024-12-04)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.6a4...0.0.6a5)
+
+**Merged pull requests:**
+
+- de-de/translate [\#11](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/11) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+
+## [0.0.6a4](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.6a4) (2024-11-24)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.6a3...0.0.6a4)
+
+**Merged pull requests:**
+
+- Add Catalan translation [\#7](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/7) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+
+## [0.0.6a3](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.6a3) (2024-11-24)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.6a2...0.0.6a3)
+
+**Merged pull requests:**
+
+- Danish translation [\#10](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/10) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+- Add Catalan translation [\#9](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/9) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+- Add Catalan translation [\#8](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/8) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+
+## [0.0.6a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.6a2) (2024-11-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.6a1...0.0.6a2)
+
+## [0.0.6a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.6a1) (2024-11-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.5...0.0.6a1)
+
+**Merged pull requests:**
+
+- added italian [\#6](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/6) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+- added italian [\#5](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/5) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+- added italian [\#4](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/4) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+
+## [0.0.5](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.5) (2024-11-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.1a3...0.0.5)
+
+## [0.0.1a3](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.1a3) (2024-11-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.3...0.0.1a3)
+
+**Merged pull requests:**
+
+- pt-pt/translate [\#3](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/3) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+
+## [0.0.3](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.3) (2024-11-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.2...0.0.3)
+
+## [0.0.2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.2) (2024-11-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/V0.0.1a2...0.0.2)
+
+## [V0.0.1a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/V0.0.1a2) (2024-11-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.1...V0.0.1a2)
+
+## [0.0.1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.1) (2024-11-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.0.1a2...0.0.1)
+
+## [0.0.1a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.0.1a2) (2024-11-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/5b602776de1b840cbcb4b3878e36e392807b20ce...0.0.1a2)
+
+**Merged pull requests:**
+
+- modernize [\#1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/1) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
