@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.2a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.2a2) (2026-10-08)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.2a1...0.7.2a2)
+
+**Merged pull requests:**
+
+- test: golden utterances for every intent in every shipped locale [\#85](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/85) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.7.2a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.2a1) (2026-10-01)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.1a1...0.7.2a1)
