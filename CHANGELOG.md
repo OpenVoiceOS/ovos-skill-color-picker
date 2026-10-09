@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.3a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.3a2) (2026-10-09)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.3a1...0.7.3a2)
+
+**Merged pull requests:**
+
+- test: gate natural golden rows on the m2v pipeline in every locale [\#50](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/50) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.7.3a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.3a1) (2026-10-09)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.2a2...0.7.3a1)
