@@ -1,7 +1,7 @@
 """End-to-end intent-routing tests for ovos-skill-color-picker (en-US).
 
 Each case boots an in-process MiniCroft with the skill loaded and feeds a real
-utterance through the padatious pipeline, asserting where it routes and how the
+utterance through the padacioso pipeline, asserting where it routes and how the
 ``{color}`` slot is filled. One case proves the ``color.blacklist`` slot-value
 exclusion: a bare pronoun ("that") captured by the open ``{color}`` slot is
 rejected as a non-color and re-prompted instead of reported.
@@ -18,14 +18,11 @@ from ovoscope import get_minicroft
 SKILL_ID = "ovos-skill-color-picker.krisgesling"
 LANG = "en-US"
 
-PIPELINE = [
-    "ovos-padatious-pipeline-plugin-high",
-    "ovos-padatious-pipeline-plugin-medium",
-]
+PIPELINE = ["ovos-padacioso-pipeline-plugin"]
 
 
 class _RoutingTest(TestCase):
-    """Shared MiniCroft harness for padatious intent routing."""
+    """Shared MiniCroft harness for padacioso intent routing."""
 
     @classmethod
     def setUpClass(cls):
@@ -84,30 +81,18 @@ class TestByNameRouting(_RoutingTest):
 
 
 class TestColorSlotKnownValuesRoute(_RoutingTest):
-    """Positive e2e coverage: sample colors from color.entity still route
-    the {color} slot correctly after wiring
-    ``self.register_entity_file("color.entity")`` into a new
-    ``initialize()`` (requires ovos-workshop>=9.3.12a1 +
-    ovos-padatious>=2.0.3a1).
+    """Sample colors from color.entity route the {color} slot, and a value
+    outside the file still routes.
 
-    Fixed upstream: ovos-padatious 2.0.3a1 (PyPI) corrected a bug where a
-    registered ``.entity`` file made a slot an effectively closed
-    vocabulary instead of the scoring hint it's documented to be
-    (INTENT-1 §5.4). Under 2.0.3a1, an out-of-list slot value still
-    matches, floored into the padatious-medium confidence band
-    (~[0.8, 0.92]); in-list values are unaffected. This hint behavior
-    only fires when ``ovos-padatious-pipeline-plugin-medium`` is in the
-    active pipeline (PIPELINE above registers high/medium/low).
+    A registered ``.entity`` file is a scoring hint, not a closed vocabulary
+    (INTENT-1 §5.4). Padacioso lowers the confidence of a slot value that is
+    not in the file, but the intent still matches with the value filled in:
+    "show me the color banana" routes to ``request_color_by_name`` with
+    ``{color}`` set to "banana". Listed samples ("teal", "maroon") match at
+    full confidence.
 
-    Empirically re-verified against ovos-padatious==2.0.3a1: "show me the
-    color banana" (unrelated, unlisted noun, not a color.entity sample)
-    now matches ``request_color_by_name.intent`` with ``{color}`` filled
-    as "banana" -- proving the registration is a hint, not an allowlist.
-    Listed samples ("teal", "maroon") keep matching too.
-
-    The registration-wiring proof itself (independent of padatious
-    matching behavior) is
-    ``test/unittests/test_skill_loading.py::TestColorEntityRegistration``.
+    ``test/unittests/test_skill_loading.py::TestColorEntityRegistration``
+    proves the registration itself, independent of any engine.
     """
 
     def test_known_color_teal_matches(self):
@@ -121,8 +106,8 @@ class TestColorSlotKnownValuesRoute(_RoutingTest):
         self.assertIn(("request_color_by_name.intent", "maroon"), intents)
 
     def test_out_of_list_value_still_routes_as_hint(self):
-        """Post ovos-padatious>=2.0.3a1: registering color.entity is a
-        scoring HINT, not a closed vocabulary. An unrelated, unlisted
+        """Registering color.entity is a scoring hint, not a closed
+        vocabulary. An unrelated, unlisted
         noun ("banana") must still match request_color_by_name.intent
         with the {color} slot filled with the literal utterance value.
         """
@@ -131,8 +116,7 @@ class TestColorSlotKnownValuesRoute(_RoutingTest):
         self.assertIn(
             ("request_color_by_name.intent", "banana"), matched,
             "out-of-list slot value did not route with the expected slot "
-            "value -- ovos-padatious hint semantics (2.0.3a1+) may have "
-            "regressed"
+            "value: the entity file acted as a closed vocabulary"
         )
 
 

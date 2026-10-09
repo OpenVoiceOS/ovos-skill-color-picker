@@ -34,39 +34,16 @@ class ColorPickerSkill(OVOSSkill):
                     terms.add(line.lower())
         return terms
 
-    @intent_handler("request_color.intent")
-    def handle_request_color(self, message: Message):
-        """Handle requests for color where the color format is unknown.
-
-        Example: 'What color is _________'
-        """
-        # ovos-spec-tools>=1.6.3a1 fixes normalize_for_match() so it no
-        # longer mangles {slot} interiors; padacioso returns the
-        # spec-correct underscored key "requested_color".
-        requested_color = message.data.get("requested_color")
-        if is_hex_code_valid(requested_color.replace(" ", "")):
-            message = message.forward("", {"hex_code": requested_color.replace(" ", "")})
-            self.handle_request_color_by_hex(message)
-            return
-
-        try:
-            r, g, b = requested_color.split()
-            message = message.forward("", {"rgb": requested_color})
-            self.handle_request_color_by_rgb(message)
-            return
-        except:  # not rgb
-            pass
-
-        message = message.forward("", {"color": requested_color})
-        self.handle_request_color_by_name(message)
-
     @intent_handler("request_color_by_name.intent")
     def handle_request_color_by_name(self, message: Message):
-        """Handle named color requests.
+        """Handle requests that name a color.
 
-        Example: 'Show me the color burly wood'
+        Example: 'What color is burly wood' or 'Show me the color teal'
+
+        The open {color} slot can also hold a hex code or three RGB values;
+        those go to the hex and RGB handlers.
         """
-        requested_color = message.data.get("color") or ""
+        requested_color = (message.data.get("color") or "").strip()
         self.log.info("Requested color: %s", requested_color)
 
         # The {color} slot is open text: a demonstrative pronoun ("set the
@@ -74,9 +51,18 @@ class ColorPickerSkill(OVOSSkill):
         # exclusion in color.blacklist marks such values as non-colors; the
         # engine does not enforce slot .blacklist yet, so reject a blacklisted
         # value here and re-prompt instead of reporting a bogus color.
-        excluded = self._slot_blacklist(self.lang)
-        if requested_color.strip().lower() in excluded:
+        if not requested_color or requested_color.lower() in self._slot_blacklist(self.lang):
             self.speak_dialog("color_not_found")
+            return
+
+        hex_code = requested_color.replace(" ", "")
+        if is_hex_code_valid(hex_code):
+            self.handle_request_color_by_hex(message.forward("", {"hex_code": hex_code}))
+            return
+
+        values = requested_color.split()
+        if len(values) == 3 and all(value.isdigit() for value in values):
+            self.handle_request_color_by_rgb(message.forward("", {"rgb": requested_color}))
             return
 
         color = color_from_description(requested_color, lang=self.lang.split("-")[0],
@@ -107,7 +93,7 @@ class ColorPickerSkill(OVOSSkill):
         # ovos-spec-tools>=1.6.3a1 fixes normalize_for_match() so a direct
         # request_color_by_hex.intent match surfaces the spec-correct
         # underscored key "hex_code" (same key the internal forward() from
-        # handle_request_color already sets).
+        # handle_request_color_by_name sets).
         requested_hex_code = (message.data.get("hex_code") or "").replace(" ", "")
         self.log.info("Requested color: %s", requested_hex_code)
         if not is_hex_code_valid(requested_hex_code):
@@ -149,7 +135,7 @@ class ColorPickerSkill(OVOSSkill):
         Example: what color has the RGB value of 172 172 172
         """
         try:
-            r, g, b = message.data["rgb"].split()
+            r, g, b = (message.data.get("rgb") or "").split()
             color = sRGBAColor(int(r), int(g), int(b))
         except ValueError:
             self.speak_dialog("color_not_found")
