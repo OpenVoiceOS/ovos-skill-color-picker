@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.3a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.3a1) (2026-10-09)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.2a2...0.7.3a1)
+
+**Merged pull requests:**
+
+- fix: speak the hex code when an RGB triple has no colour name [\#88](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/88) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.7.2a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.2a2) (2026-10-08)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.2a1...0.7.2a2)
