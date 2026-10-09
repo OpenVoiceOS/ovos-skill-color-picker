@@ -1,4 +1,5 @@
-który kolor ma hektologiczny kod {hex_code}
-który kolor ma heksowny kod {hex_code}
-który kolor jest szpiątek {hex_code}
-który kolor jest hex {hex_code}
+jaki kolor ma kod szesnastkowy {hex_code}
+który kolor ma kod heksadecymalny {hex_code}
+jaki kolor to kod hex {hex_code}
+przetłumacz kod hex {hex_code} na kolor
+jaki kolor to hex {hex_code}

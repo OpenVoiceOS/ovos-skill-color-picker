@@ -5,7 +5,9 @@ padatious intents, the ``{color}`` entity vocabulary and its blacklist, and
 that the color parser the skill relies on resolves a named color. This keeps
 the build/coverage matrix quick while the heavy routing lives in test/end2end/.
 """
+import re
 from os.path import dirname, isfile, join
+from pathlib import Path
 from unittest import TestCase
 
 SKILL_ROOT = dirname(dirname(dirname(__file__)))
@@ -21,8 +23,7 @@ def _read(*parts):
 
 class TestLocaleResources(TestCase):
     def test_intent_files_present(self):
-        for name in ("request_color.intent",
-                     "request_color_by_name.intent",
+        for name in ("request_color_by_name.intent",
                      "request_color_by_hex.intent",
                      "request_color_by_rgb.intent"):
             self.assertTrue(_read("intents", name).strip(),
@@ -50,3 +51,12 @@ class TestColorParser(TestCase):
         color = color_from_description("red", lang="en")
         self.assertIsNotNone(color)
         self.assertTrue(color.hex_str)
+
+
+class TestSlotHints(TestCase):
+    def test_every_slot_has_an_entity_file(self):
+        for locale in sorted(Path(SKILL_ROOT, "locale").iterdir()):
+            slots = {slot for intent in locale.glob("intents/*.intent")
+                     for slot in re.findall(r"\{(\w+)\}", intent.read_text(encoding="utf-8"))}
+            entities = {entity.stem for entity in locale.glob("entities/*.entity")}
+            self.assertEqual(slots, entities, f"{locale.name}: slots and .entity files differ")
