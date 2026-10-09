@@ -77,3 +77,60 @@ def test_rgb_it_it_speaks_correct_dialog():
         )
     finally:
         mc.stop()
+
+
+# 52 152 219 is 0x34 0x98 0xdb and no CSS3 name covers it, so it is the
+# triple that reaches the nameless branch. Every locale writes that branch's
+# dialog with one slot, {hex_code}.
+UNNAMED_RGB = "52 152 219"
+UNNAMED_HEX = "#3498DB"
+
+
+def test_rgb_without_a_name_speaks_the_hex_code_en_us():
+    """An RGB triple with no color name must speak the hex code the
+    report_color_by_rgb_name_not_known dialog asks for, not the literal
+    "{hex_code}"."""
+    mc = get_minicroft([SKILL_ID])
+    try:
+        speak = _speak_dialog(
+            mc,
+            f"what color has the RGB value of {UNNAMED_RGB}",
+            "en-US",
+            "e2e-rgb-unnamed-en",
+        )
+        meta = speak.data["meta"]
+        assert meta["dialog"] == "report_color_by_rgb_name_not_known", (
+            f"expected report_color_by_rgb_name_not_known, got {meta['dialog']!r} "
+            f"(utterance: {speak.data['utterance']!r})"
+        )
+        assert meta["data"]["hex_code"].upper() == UNNAMED_HEX, (
+            f"expected hex_code {UNNAMED_HEX}, got {meta['data']!r}"
+        )
+        assert speak.data["utterance"] == f"That color has a hex value of {UNNAMED_HEX}", (
+            f"unexpected spoken line: {speak.data['utterance']!r}"
+        )
+    finally:
+        mc.stop()
+
+
+def test_rgb_without_a_name_speaks_the_hex_code_it_it():
+    """The same nameless branch under it-IT: the slot is filled in a locale
+    whose dialog line is not the en-US one."""
+    mc = get_minicroft([SKILL_ID], lang="it-IT")
+    try:
+        speak = _speak_dialog(
+            mc,
+            f"a che colore corrisponde il valore R G B {UNNAMED_RGB}",
+            "it-IT",
+            "e2e-rgb-unnamed-it",
+        )
+        meta = speak.data["meta"]
+        assert meta["dialog"] == "report_color_by_rgb_name_not_known", (
+            f"expected report_color_by_rgb_name_not_known, got {meta['dialog']!r} "
+            f"(utterance: {speak.data['utterance']!r})"
+        )
+        assert speak.data["utterance"] == f"Il colore corrisponde a {UNNAMED_HEX}", (
+            f"unexpected spoken line: {speak.data['utterance']!r}"
+        )
+    finally:
+        mc.stop()
