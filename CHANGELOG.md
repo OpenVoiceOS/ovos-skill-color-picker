@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.3a3](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.3a3) (2026-10-28)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.3a2...0.7.3a3)
+
+**Merged pull requests:**
+
+- test: run the end2end suite on the m2v prototype pipeline [\#92](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/92) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.7.3a2](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.3a2) (2026-10-09)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.3a1...0.7.3a2)
