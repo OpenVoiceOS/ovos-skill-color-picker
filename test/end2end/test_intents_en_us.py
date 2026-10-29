@@ -21,6 +21,17 @@ LANG = "en-US"
 PIPELINE = ["ovos-padacioso-pipeline-plugin"]
 
 
+def _in_session(message, session):
+    """True when ``message`` answers the utterance of ``session``.
+
+    The bus is process-wide and its topics are shared, so a reply or an
+    intent event of the preceding test can arrive after that test's window
+    closed. Only a message of this call's own session counts.
+    """
+    ctx = (message.context or {}).get("session") or {}
+    return ctx.get("session_id") == session.session_id
+
+
 class _RoutingTest(TestCase):
     """Shared MiniCroft harness for padacioso intent routing."""
 
@@ -43,24 +54,40 @@ class _RoutingTest(TestCase):
         # naming fix documented in ovos-skill-audio-recording's e2e suite);
         # listen on the bare name so this doesn't regress on the floor bump.
         by_name = f"{SKILL_ID}:request_color_by_name"
-        handlers = {
-            by_name: lambda m: intents.append(("request_color_by_name.intent",
-                                                m.data.get("color"))),
-        }
+        session = Session(f"e2e-en_us-{abs(hash(utterance))}")
+        session.lang = LANG
+        session.pipeline = PIPELINE
+
+        def by_name_cb(m):
+            if _in_session(m, session):
+                intents.append(("request_color_by_name.intent", m.data.get("color")))
+
+        handlers = {by_name: by_name_cb}
         for msg_type, cb in handlers.items():
             self.bus.on(msg_type, cb)
-        speak_cb = lambda m: spoken.append(m.data.get("utterance", ""))
+
+        def speak_cb(m):
+            # without the session filter, a late reply of the preceding test
+            # ("i could not find that color") failed test_rgb_white_is_spoken
+            # on a loaded runner
+            if _in_session(m, session):
+                spoken.append(m.data.get("utterance", ""))
+
         self.bus.on("speak", speak_cb)
         try:
-            session = Session(f"e2e-en_us-{abs(hash(utterance))}")
-            session.lang = LANG
-            session.pipeline = PIPELINE
             self.bus.emit(Message(
                 "recognizer_loop:utterance",
                 {"utterances": [utterance], "lang": LANG},
                 {"session": session.serialize()},
             ))
-            time.sleep(3)
+            # Wait for this session's reply rather than sleeping a fixed
+            # three seconds. A loaded two-worker runner is slower than a
+            # developer machine, and a blind sleep turns that into a red.
+            deadline = time.time() + 30
+            while time.time() < deadline and not spoken:
+                time.sleep(0.1)
+            # let a second dialog of the same turn land
+            time.sleep(0.5)
         finally:
             for msg_type, cb in handlers.items():
                 self.bus.remove(msg_type, cb)
@@ -171,7 +198,9 @@ class TestSiblingNegatives(_RoutingTest):
         for label, msg_type in siblings.items():
             if label == own_intent:
                 continue
-            cb = (lambda l: lambda m: claimed.append(l))(label)
+            def cb(m, label=label):
+                if _in_session(m, session):
+                    claimed.append(label)
             handlers[msg_type] = cb
             self.bus.on(msg_type, cb)
         try:
@@ -219,3 +248,26 @@ class TestBlacklistSlotExclusion(_RoutingTest):
                          "'that' must not yield a color report")
         self.assertIn("could not find", joined,
                       "'that' must be rejected in-handler via color_not_found")
+
+
+class TestCollectorOwnSession(_RoutingTest):
+    """The collector keeps only the messages of its own session.
+
+    A late reply of another session lands inside the window here, the way a
+    slow runner delivers the preceding test's answer.
+    """
+
+    def test_a_reply_of_another_session_is_not_collected(self):
+        stale = "i could not find that color"
+
+        def late_reply(message):
+            self.bus.emit(Message("speak", {"utterance": stale},
+                                  {"session": {"session_id": "another-test"}}))
+
+        self.bus.on("recognizer_loop:utterance", late_reply)
+        try:
+            _, spoken = self._run("what color is the RGB value 255 255 255")
+        finally:
+            self.bus.remove("recognizer_loop:utterance", late_reply)
+        self.assertNotIn(stale, spoken)
+        self.assertIn("white", " ".join(spoken).lower())
