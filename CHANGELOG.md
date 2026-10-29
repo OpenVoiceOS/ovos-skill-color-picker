@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.4a1](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.4a1) (2026-10-29)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.3a3...0.7.4a1)
+
+**Merged pull requests:**
+
+- fix\(test\): the e2e collectors take only their own session's messages [\#95](https://github.com/OpenVoiceOS/ovos-skill-color-picker/pull/95) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.7.3a3](https://github.com/OpenVoiceOS/ovos-skill-color-picker/tree/0.7.3a3) (2026-10-28)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-color-picker/compare/0.7.3a2...0.7.3a3)
